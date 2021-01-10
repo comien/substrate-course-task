@@ -267,9 +267,13 @@ impl pallet_template::Trait for Runtime {
 	type Event = Event;
 }
 
+parameter_types! {
+	pub const KittyIndexValue: u32 = 10;
+}
 impl pallet_kitties::Trait for Runtime {
 	type Event = Event;
 	type Randomness = RandomnessCollectiveFlip;
+	type KittyIndexValue = KittyIndexValue;
 }
 
 // Create the runtime by composing the FRAME pallets that were previously configured.
