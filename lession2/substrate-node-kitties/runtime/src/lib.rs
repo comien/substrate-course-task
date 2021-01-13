@@ -268,13 +268,15 @@ impl pallet_template::Trait for Runtime {
 }
 
 parameter_types! {
-	pub const KittyIndexValue: u32 = 10;
+	pub const KittyIndexValue: u32 = 1;
+	pub const ReserveAmount: u64 = 10;
 }
 impl pallet_kitties::Trait for Runtime {
 	type Event = Event;
 	type Randomness = RandomnessCollectiveFlip;
 	type KittyIndexValue = KittyIndexValue;
 	type Currency = pallet_balances::Module<Runtime>;
+	type ReserveAmount = ReserveAmount;
 }
 
 // Create the runtime by composing the FRAME pallets that were previously configured.

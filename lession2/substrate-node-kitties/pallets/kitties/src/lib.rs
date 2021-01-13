@@ -23,6 +23,7 @@ pub trait Trait: frame_system::Trait {
     // 2. runtime 指定 Kitty Index
     type KittyIndexValue: Get<u32>;
     type Currency: Currency<Self::AccountId> + ReservableCurrency<Self::AccountId>; // 6.质押
+    type ReserveAmount: Get<BalanceOf<Self>>;
 }
 
 decl_storage! {
@@ -64,19 +65,19 @@ decl_module! {
 		fn deposit_event() = default;
 
 		#[weight = 0]
-		pub fn create(origin, amount: BalanceOf<T>) { // 创建kitty
+		pub fn create(origin) { // 创建kitty
 			let sender = ensure_signed(origin)?;
 			let kitty_id = Self::next_kitty_id()?; // 取id
 			let dna = Self::random_value(&sender);
             let kitty = Kitty(dna);
             Self::insert_kitty(&sender, kitty_id, kitty);
             //质押
-            T::Currency::reserve(&sender, amount).map_err(|_| "locker can't afford to lock the amount requested")?;
+            T::Currency::reserve(&sender, T::ReserveAmount::get()).map_err(|_| "locker can't afford to lock the amount requested")?;
 			Self::deposit_event(RawEvent::Created(sender, kitty_id));
 		}
 
 		#[weight = 0]
-		pub fn transfer(origin, to: T::AccountId, kitty_id: KittyIndex, amount: BalanceOf<T>){
+		pub fn transfer(origin, to: T::AccountId, kitty_id: KittyIndex){
             let sender = ensure_signed(origin)?;
             let account_id = Self::kitty_owner(kitty_id).ok_or(Error::<T>::InvalidKittyId)?; // 1.bug，没有验证所有者
             ensure!(account_id == sender.clone(), Error::<T>::NotKittyOwner);
@@ -85,16 +86,16 @@ decl_module! {
             Self::insert_account_kitty(&to, kitty_id);
 
             <KittyOwners<T>>::insert(kitty_id, to.clone());
-            T::Currency::transfer(&sender, &to, amount, AllowDeath)?;
+            T::Currency::transfer(&sender, &to, T::ReserveAmount::get(), AllowDeath)?;
             Self::deposit_event(RawEvent::Transferred(sender, to, kitty_id));
 		}
         /// 孕育kitty
 		#[weight = 0]
-		pub fn breed(origin, kitty_id_1: KittyIndex, kitty_id_2: KittyIndex, amount: BalanceOf<T>){
+		pub fn breed(origin, kitty_id_1: KittyIndex, kitty_id_2: KittyIndex){
             let sender = ensure_signed(origin)?;
             let new_kitty_id = Self::do_breed(&sender, kitty_id_1, kitty_id_2)?;
-            //质押
-            T::Currency::reserve(&sender, amount).map_err(|_| "locker can't afford to lock the amount requested")?;
+            //6. 质押
+            T::Currency::reserve(&sender, T::ReserveAmount::get()).map_err(|_| "locker can't afford to lock the amount requested")?;
 			Self::deposit_event(RawEvent::Created(sender, new_kitty_id));
 		}
 
@@ -191,6 +192,7 @@ mod tests {
         pub const AvailableBlockRatio: Perbill = Perbill::from_percent(75);
         pub const ExistentialDeposit: u64 = 1;
         pub const KittyIndexValue: u32 = 0;
+	pub const ReserveAmount: u64 = 10;
     }
 
     impl system::Trait for Test {
@@ -249,6 +251,7 @@ mod tests {
         type Randomness = Randomness;
         type KittyIndexValue = KittyIndexValue;
         type Currency = pallet_balances::Module<Self>;
+        type ReserveAmount = ReserveAmount;
     }
 
     pub type Kitties = Module<Test>;
@@ -280,9 +283,9 @@ mod tests {
     fn owned_kitties_can_append_values() {
         new_test_ext().execute_with(|| {
             run_to_block(10);
-            assert_ok!(Kitties::create(Origin::signed(1), 10));
+            assert_ok!(Kitties::create(Origin::signed(1)));
             let create_event = TestEvent::kitties_event(Event::<Test>::Created(1u64, 0));
-            assert_eq!( // 检查event
+            assert_eq!( // 5. 检查event
                         System::events()[1].event, create_event
             );
         })
@@ -293,10 +296,10 @@ mod tests {
     fn breed_kitties() {
         new_test_ext().execute_with(|| {
             run_to_block(10);
-            assert_eq!(Kitties::create(Origin::signed(1), 10), Ok(())); // ID=0
-            assert_eq!(Kitties::create(Origin::signed(1), 10), Ok(()));
+            assert_eq!(Kitties::create(Origin::signed(1)), Ok(())); // ID=0
+            assert_eq!(Kitties::create(Origin::signed(1)), Ok(()));
             // ID=1
-            assert_ok!(Kitties::breed(Origin::signed(1),0 ,1, 10)); // breed success
+            assert_ok!(Kitties::breed(Origin::signed(1),0 ,1)); // breed success
             let create_event = TestEvent::kitties_event(Event::<Test>::Created(1u64, 2));
             assert_eq!( // 检查event
                         System::events()[5].event, create_event
@@ -309,10 +312,10 @@ mod tests {
     fn breed_kitties_not_found() {
         new_test_ext().execute_with(|| {
             run_to_block(10);
-            assert_eq!(Kitties::create(Origin::signed(1), 10), Ok(()));
+            assert_eq!(Kitties::create(Origin::signed(1)), Ok(()));
             // id=0
             assert_noop!( // id 不存在
-                Kitties::breed(Origin::signed(1), 0, 1, 10),
+                Kitties::breed(Origin::signed(1), 0, 1),
                 Error::<Test>::InvalidKittyId
             );
         })
@@ -323,10 +326,10 @@ mod tests {
     fn breed_kitties_id_eq() {
         new_test_ext().execute_with(|| {
             run_to_block(10);
-            assert_eq!(Kitties::create(Origin::signed(1), 10), Ok(()));
+            assert_eq!(Kitties::create(Origin::signed(1)), Ok(()));
             //ID =0
             assert_noop!( // 父母id相同错误
-                Kitties::breed(Origin::signed(1), 0, 0,10),
+                Kitties::breed(Origin::signed(1), 0, 0),
                 Error::<Test>::RrquireDifferentParent
             );
         })
@@ -337,10 +340,10 @@ mod tests {
     fn breed_kitties_account_owned_kitties() {
         new_test_ext().execute_with(|| {
             run_to_block(10);
-            assert_eq!(Kitties::create(Origin::signed(1), 10), Ok(())); //ID =0
-            assert_eq!(Kitties::create(Origin::signed(1), 10), Ok(()));
+            assert_eq!(Kitties::create(Origin::signed(1)), Ok(())); //ID =0
+            assert_eq!(Kitties::create(Origin::signed(1)), Ok(()));
             // id=1
-            assert_ok!(Kitties::breed(Origin::signed(1),0 ,1, 10)); // breed success
+            assert_ok!(Kitties::breed(Origin::signed(1),0 ,1)); // breed success
             assert_eq!(AccountKitties::<Test>::iter_prefix_values(1).count(), 3); // 验证,该账号有3 kitty
         })
     }
@@ -350,9 +353,9 @@ mod tests {
     fn transfer_kitties() {
         new_test_ext().execute_with(|| {
             run_to_block(10);
-            assert_ok!(Kitties::create(Origin::signed(1), 10));
+            assert_ok!(Kitties::create(Origin::signed(1)));
             // let id = Kitties::kitties_count();
-            assert_ok!(Kitties::transfer(Origin::signed(1), 2 , 0, 10));
+            assert_ok!(Kitties::transfer(Origin::signed(1), 2 , 0));
             let create_event = TestEvent::kitties_event(Event::<Test>::Transferred(1, 2, 0));
             assert_eq!( // 检查event
                         System::events()[3].event, create_event
@@ -365,10 +368,10 @@ mod tests {
     fn transfer_kitties_not_owner() {
         new_test_ext().execute_with(|| {
             run_to_block(10);
-            assert_ok!(Kitties::create(Origin::signed(1), 10));
+            assert_ok!(Kitties::create(Origin::signed(1)));
             // let id = Kitties::kitties_count();
             assert_noop!(
-                Kitties::transfer(Origin::signed(2), 1, 0, 10),
+                Kitties::transfer(Origin::signed(2), 1, 0),
                 Error::<Test>::NotKittyOwner //非拥有者
                 );
         })
@@ -379,11 +382,11 @@ mod tests {
     fn account_owned_kitties() {
         new_test_ext().execute_with(|| {
             run_to_block(10);
-            assert_eq!(Kitties::create(Origin::signed(1), 10), Ok(()));
+            assert_eq!(Kitties::create(Origin::signed(1)), Ok(()));
             assert_eq!(AccountKitties::<Test>::contains_key(1, 0), true); // 查看账号是否存在该kitty
-            assert_eq!(Kitties::create(Origin::signed(1), 10), Ok(()));
-            assert_eq!(Kitties::create(Origin::signed(1), 10), Ok(()));
-            assert_eq!(Kitties::breed(Origin::signed(1), 1, 2, 10), Ok(()));
+            assert_eq!(Kitties::create(Origin::signed(1)), Ok(()));
+            assert_eq!(Kitties::create(Origin::signed(1)), Ok(()));
+            assert_eq!(Kitties::breed(Origin::signed(1), 1, 2), Ok(()));
             assert_eq!(AccountKitties::<Test>::iter_prefix_values(1).count(), 4); // 验证账号共 3 kitty
         })
     }
@@ -393,8 +396,8 @@ mod tests {
     fn transfer_kitties_validate_account_count() {
         new_test_ext().execute_with(|| {
             run_to_block(10);
-            assert_ok!(Kitties::create(Origin::signed(1), 10));
-            assert_ok!(Kitties::transfer(Origin::signed(1), 2 , 0, 10)); // 转移给2
+            assert_ok!(Kitties::create(Origin::signed(1)));
+            assert_ok!(Kitties::transfer(Origin::signed(1), 2 , 0)); // 转移给2
             assert_eq!(AccountKitties::<Test>::iter_prefix_values(1).count(), 0); // 转移后没有了kitty
             assert_eq!(AccountKitties::<Test>::iter_prefix_values(2).count(), 1); // 一个kitty
         })
@@ -404,12 +407,12 @@ mod tests {
     fn kitty_parent_children_count() {
         new_test_ext().execute_with(|| {
             run_to_block(10);
-            assert_ok!(Kitties::create(Origin::signed(1), 10)); //0
-            assert_ok!(Kitties::create(Origin::signed(1), 10)); //1
-            assert_ok!(Kitties::breed(Origin::signed(1), 0 , 1, 10)); //2
-            assert_ok!(Kitties::breed(Origin::signed(1), 0 , 1, 10)); //3
-            assert_ok!(Kitties::create(Origin::signed(1), 10)); //4
-            assert_ok!(Kitties::breed(Origin::signed(1), 2 , 4, 10)); //5
+            assert_ok!(Kitties::create(Origin::signed(1))); //0
+            assert_ok!(Kitties::create(Origin::signed(1))); //1
+            assert_ok!(Kitties::breed(Origin::signed(1), 0 , 1)); //2
+            assert_ok!(Kitties::breed(Origin::signed(1), 0 , 1)); //3
+            assert_ok!(Kitties::create(Origin::signed(1))); //4
+            assert_ok!(Kitties::breed(Origin::signed(1), 2 , 4)); //5
             assert_eq!(KittyParents::get(2), (0, 1)); // 验证其父母
             assert_eq!(KittyChidren::iter_prefix_values(0).count(), 2); // 两个孩子
             assert_eq!(KittyMate::get((0, 1)), Some(0)); // 0，1互为伴侣
