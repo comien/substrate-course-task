@@ -20,8 +20,8 @@ type BalanceOf<T> = <<T as Trait>::Currency as Currency<<T as frame_system::Trai
 pub trait Trait: frame_system::Trait {
     type Event: From<Event<Self>> + Into<<Self as frame_system::Trait>::Event>;
     type Randomness: Randomness<Self::Hash>;
-    type KittyIndexValue: Get<u32>;
     // 2. runtime 指定 Kitty Index
+    type KittyIndexValue: Get<u32>;
     type Currency: Currency<Self::AccountId> + ReservableCurrency<Self::AccountId>; // 6.质押
 }
 
@@ -78,7 +78,7 @@ decl_module! {
 		#[weight = 0]
 		pub fn transfer(origin, to: T::AccountId, kitty_id: KittyIndex, amount: BalanceOf<T>){
             let sender = ensure_signed(origin)?;
-            let account_id = Self::kitty_owner(kitty_id).ok_or(Error::<T>::InvalidKittyId)?; // todo course bug，没有验证所有者
+            let account_id = Self::kitty_owner(kitty_id).ok_or(Error::<T>::InvalidKittyId)?; // 1.bug，没有验证所有者
             ensure!(account_id == sender.clone(), Error::<T>::NotKittyOwner);
             let _kit = Self::kitties(kitty_id).ok_or(Error::<T>::InvalidKittyId)?;
             Self::remove_account_kitty(&sender, kitty_id);
