@@ -1,8 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
-  <component name="CMakeRunConfigurationManager" shouldGenerate="true" shouldDeleteObsolete="true">
-    <generated />
-  </component>
   <component name="CMakeSettings">
     <configurations>
       <configuration PROFILE_NAME="Debug" CONFIG_NAME="Debug" ENABLED="true" />
@@ -12,8 +9,8 @@
     <cargoProject FILE="$PROJECT_DIR$/Cargo.toml" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="912f071b-2b81-4aa8-b183-e4cf1355ac78" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+    <list default="true" id="41fe4f45-111c-46c5-ad9f-1d05a6ee60f6" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/../../../lession3/kitties-hw/node/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../../../lession3/kitties-hw/node/.idea/workspace.xml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -27,9 +24,9 @@
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/../../.." />
   </component>
   <component name="MacroExpansionManager">
-    <option name="directoryName" value="5k3019ak" />
+    <option name="directoryName" value="c1ww1fq5" />
   </component>
-  <component name="ProjectId" id="1n2wjs1qWHqo8BD4gI3pAe2F96h" />
+  <component name="ProjectId" id="1nMio7MJpqKj4enIN643azxTEnz" />
   <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
@@ -42,30 +39,22 @@
     <property name="cf.first.check.clang-format" value="false" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$" />
     <property name="org.rust.cargo.project.model.PROJECT_DISCOVERY" value="true" />
+    <property name="org.rust.disableDetachedFileInspection/Users/yuzhai/work/block-chain/substrate-course-task/lession4/advance-lecture-04-ocw/lecture-demo/pallets/ocw-demo/src/lib.rs" value="true" />
+    <property name="org.rust.disableDetachedFileInspection/Users/yuzhai/work/block-chain/substrate-course-task/lession4/advance-lecture-04-ocw/lecture-demo/pallets/ocw-demo/src/tests.rs" value="true" />
     <property name="settings.editor.selected.configurable" value="preferences.lookFeel" />
-  </component>
-  <component name="RunManager">
-    <configuration default="true" type="GradleAppRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" PASS_PARENT_ENVS_2="true">
-      <method v="2">
-        <option name="com.jetbrains.cidr.cpp.gradle.execution.GradleNativeBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
-      </method>
-    </configuration>
   </component>
   <component name="RustProjectSettings">
     <option name="toolchainHomeDirectory" value="$USER_HOME$/.cargo/bin" />
-    <option name="version" value="2" />
   </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
     <task active="true" id="Default" summary="Default task">
-      <changelist id="912f071b-2b81-4aa8-b183-e4cf1355ac78" name="Default Changelist" comment="" />
-      <created>1610601631163</created>
+      <changelist id="41fe4f45-111c-46c5-ad9f-1d05a6ee60f6" name="Default Changelist" comment="" />
+      <created>1611206533550</created>
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
-      <updated>1610601631163</updated>
-      <workItem from="1610601632385" duration="15929000" />
-      <workItem from="1610859601798" duration="7094000" />
-      <workItem from="1611110354370" duration="6355000" />
+      <updated>1611206533550</updated>
+      <workItem from="1611206535546" duration="1410000" />
     </task>
     <servers />
   </component>
@@ -82,6 +71,5 @@
         </entry>
       </map>
     </option>
-    <option name="oldMeFiltersMigrated" value="true" />
   </component>
 </project>
