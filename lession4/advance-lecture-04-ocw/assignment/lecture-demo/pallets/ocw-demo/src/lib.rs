@@ -5,7 +5,7 @@
 #[cfg(test)]
 mod tests;
 
-use core::{convert::TryInto, fmt};
+use core::{fmt};
 use frame_support::{
     debug, decl_error, decl_event, decl_module, decl_storage, dispatch::DispatchResult,
 };
@@ -14,18 +14,14 @@ use parity_scale_codec::{Decode, Encode};
 use frame_system::{
     self as system, ensure_none, ensure_signed,
     offchain::{
-        AppCrypto, CreateSignedTransaction, SendSignedTransaction, SendUnsignedTransaction,
-        SignedPayload, SigningTypes, Signer, SubmitTransaction,
+        AppCrypto, CreateSignedTransaction,
+        SignedPayload, SigningTypes, SubmitTransaction,
     },
 };
 use sp_core::crypto::KeyTypeId;
 use sp_runtime::{
     RuntimeDebug,
     offchain as rt_offchain,
-    offchain::{
-        storage::StorageValueRef,
-        storage_lock::{StorageLock, BlockAndTime},
-    },
     transaction_validity::{
         InvalidTransaction, TransactionSource, TransactionValidity,
         ValidTransaction,
@@ -134,6 +130,7 @@ pub fn de_string_to_bytes<'de, D>(de: D) -> Result<Vec<u8>, D::Error>
     let s: &str = Deserialize::deserialize(de)?;
     Ok(s.as_bytes().to_vec())
 }
+
 // 保留三位小数
 pub fn de_slice_str_to_bytes<'de, D>(de: D) -> Result<Vec<u8>, D::Error>
     where
@@ -255,10 +252,10 @@ decl_module! {
             debug::info!("received dot price for usd ：{}",str::from_utf8(&res).unwrap());
             DOTPriceForUSD::mutate(|dot_vec|{
                 debug::info!("dot price for usd count：{}",dot_vec.len());
-                if dot_vec.len() > 9{
-                    dot_vec.remove(0);
+                if dot_vec.len() > 9{ // 满10个
+                    dot_vec.remove(0); // 删除最早的价格
                 }
-                dot_vec.push(res.clone())
+                dot_vec.push(res.clone()) // 存储新价格
             });
 			Ok(())
 		}
@@ -291,7 +288,7 @@ impl<T: Trait> Module<T> {
             })?;
         debug::info!("dot price: {}", str::from_utf8(dot_info.data.price_usd.as_slice()).unwrap());
         let call = Call::submit_dot_usd_price(dot_info.data.price_usd);
-        // 非隐私数据，所以选择使用未签名交易
+        // DOT价格非隐私数据，所以选择使用未签名交易
         SubmitTransaction::<T, Call<T>>::submit_unsigned_transaction(call.into())
             .map_err(|_| {
                 debug::error!("Failed in fetch_dot_data");

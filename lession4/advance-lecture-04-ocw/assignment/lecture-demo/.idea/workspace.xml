@@ -10,7 +10,8 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="41fe4f45-111c-46c5-ad9f-1d05a6ee60f6" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/../../../../lession3/kitties-hw/node/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../../../../lession3/kitties-hw/node/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pallets/ocw-demo/src/lib.rs" beforeDir="false" afterPath="$PROJECT_DIR$/pallets/ocw-demo/src/lib.rs" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -63,7 +64,7 @@
       <option name="presentableId" value="Default" />
       <updated>1611206533550</updated>
       <workItem from="1611206535546" duration="1199000" />
-      <workItem from="1611210099194" duration="26321000" />
+      <workItem from="1611210099194" duration="26736000" />
     </task>
     <servers />
   </component>
