@@ -9,9 +9,7 @@
     <cargoProject FILE="$PROJECT_DIR$/Cargo.toml" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="41fe4f45-111c-46c5-ad9f-1d05a6ee60f6" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-    </list>
+    <list default="true" id="75d6ea01-7d26-434c-b41b-1c55af4a2c99" name="Default Changelist" comment="" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -20,14 +18,10 @@
   <component name="ClangdSettings">
     <option name="formatViaClangd" value="false" />
   </component>
-  <component name="Git.Settings">
-    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/../../../.." />
-  </component>
   <component name="MacroExpansionManager">
-    <option name="directoryName" value="c1ww1fq5" />
+    <option name="directoryName" value="yuoxrpdo" />
   </component>
-  <component name="ProjectId" id="1nMio7MJpqKj4enIN643azxTEnz" />
-  <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
+  <component name="ProjectId" id="1nitNHiTAxngyVe1bozsMGbEm5s" />
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
@@ -39,16 +33,9 @@
     <property name="cf.first.check.clang-format" value="false" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$" />
     <property name="org.rust.cargo.project.model.PROJECT_DISCOVERY" value="true" />
-    <property name="org.rust.disableDetachedFileInspection/Users/yuzhai/work/block-chain/substrate-course-task/lession4/advance-lecture-04-ocw/lecture-demo/pallets/ocw-demo/src/tests.rs" value="true" />
+    <property name="org.rust.hideNoCargoProjectNotifications/Users/yuzhai/work/block-chain/contract/erc20/Cargo.toml" value="true" />
+    <property name="org.rust.hideNoCargoProjectNotifications/Users/yuzhai/work/block-chain/contract/erc20/lib.rs" value="true" />
     <property name="settings.editor.selected.configurable" value="preferences.lookFeel" />
-    <property name="ts.external.directory.path" value="$APPLICATION_HOME_DIR$/plugins/JavaScriptLanguage/jsLanguageServicesImpl/external" />
-  </component>
-  <component name="RunManager">
-    <configuration default="true" type="GradleAppRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" PASS_PARENT_ENVS_2="true">
-      <method v="2">
-        <option name="com.jetbrains.cidr.cpp.gradle.execution.GradleNativeBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
-      </method>
-    </configuration>
   </component>
   <component name="RustProjectSettings">
     <option name="toolchainHomeDirectory" value="$USER_HOME$/.cargo/bin" />
@@ -57,29 +44,19 @@
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
     <task active="true" id="Default" summary="Default task">
-      <changelist id="41fe4f45-111c-46c5-ad9f-1d05a6ee60f6" name="Default Changelist" comment="" />
-      <created>1611206533550</created>
+      <changelist id="75d6ea01-7d26-434c-b41b-1c55af4a2c99" name="Default Changelist" comment="" />
+      <created>1611884699117</created>
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
-      <updated>1611206533550</updated>
-      <workItem from="1611206535546" duration="1199000" />
-      <workItem from="1611210099194" duration="28731000" />
+      <updated>1611884699117</updated>
+      <workItem from="1611884700855" duration="358000" />
+      <workItem from="1611885061518" duration="5816000" />
+      <workItem from="1612319650512" duration="2563000" />
+      <workItem from="1612323218956" duration="4166000" />
     </task>
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="3" />
-  </component>
-  <component name="Vcs.Log.Tabs.Properties">
-    <option name="TAB_STATES">
-      <map>
-        <entry key="MAIN">
-          <value>
-            <State />
-          </value>
-        </entry>
-      </map>
-    </option>
-    <option name="oldMeFiltersMigrated" value="true" />
   </component>
 </project>
