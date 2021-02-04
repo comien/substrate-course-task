@@ -8,6 +8,7 @@ mod erc20 {
 
     #[ink(storage)]
     pub struct Erc20 {
+        issuer: AccountId, // 发行人
         total_supply: Balance,
         // 总发行量
         balances: StorageHashMap<AccountId, Balance>,
@@ -39,6 +40,7 @@ mod erc20 {
         InSufficientBalance,
         // 余额不足
         InSufficientAllowance, // 余额不足
+        IssuePermissionDenied, // 余额不足
     }
 
     pub type Result<T> = core::result::Result<T, Error>;
@@ -50,6 +52,7 @@ mod erc20 {
             let mut balances = StorageHashMap::new(); // 初始化
             balances.insert(caller, total_supply);
             let instance = Self {
+                issuer: caller,
                 total_supply: total_supply,
                 balances: balances,
                 allowance: StorageHashMap::new(),
@@ -109,17 +112,37 @@ mod erc20 {
             }
         }
 
-        // /// 销毁
-        // #[ink(message)]
-        // pub fn burn(&mut self) -> Balance {
-        //     // todo
-        //
-        // }
+        /// 销毁
+        #[ink(message)]
+        pub fn burn(&mut self, value: Balance) -> Result<()> {
+            // todo
+            let who = self.env().caller();
+            let from_balance = self.balance_of(who);
+            if from_balance < value {
+                return Err(Error::InSufficientBalance);
+            }
+            self.balances.insert(who, from_balance - value); // 减
+            let total = self.total_supply();
+            self.total_supply = total - value;
 
-        // #[ink(message)]
-        // pub fn issue(&mut self) -> Balance {
-        //     // todo 分发
-        // }
+            Ok(())
+        }
+
+        /// 增发
+        #[ink(message)]
+        pub fn issue(&mut self, value:Balance) -> Result<()> {
+            // todo
+            let who = self.env().caller();
+            if who != self.issuer{
+                return Err(Error::IssuePermissionDenied)
+            }
+            let total = self.total_supply();
+            self.total_supply = total + value;
+            let balance = self.balance_of(who);
+            self.balances.insert(who, balance + value); // 增
+
+            Ok(())
+        }
 
         /// 转账
         #[ink(message)]
