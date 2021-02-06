@@ -9,8 +9,8 @@ mod erc20 {
     #[ink(storage)]
     pub struct Erc20 {
         issuer: AccountId, // 发行人
-        total_supply: Balance,
         // 总发行量
+        total_supply: Balance,
         balances: StorageHashMap<AccountId, Balance>,
         // 余额
         allowance: StorageHashMap<(AccountId, AccountId), Balance>, // 允许别人使用的额度
