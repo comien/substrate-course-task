@@ -5,12 +5,9 @@
       <configuration PROFILE_NAME="Debug" CONFIG_NAME="Debug" ENABLED="true" />
     </configurations>
   </component>
-  <component name="CargoProjects">
-    <cargoProject FILE="$PROJECT_DIR$/Cargo.toml" />
-  </component>
   <component name="ChangeListManager">
-    <list default="true" id="75d6ea01-7d26-434c-b41b-1c55af4a2c99" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+    <list default="true" id="513975bd-7ce6-4036-bca8-3637b56af93b" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/../lession5/erc20/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../lession5/erc20/.idea/workspace.xml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -21,12 +18,12 @@
     <option name="formatViaClangd" value="false" />
   </component>
   <component name="Git.Settings">
-    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/../.." />
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/.." />
   </component>
   <component name="MacroExpansionManager">
-    <option name="directoryName" value="yuoxrpdo" />
+    <option name="directoryName" value="64gimvbk" />
   </component>
-  <component name="ProjectId" id="1nitNHiTAxngyVe1bozsMGbEm5s" />
+  <component name="ProjectId" id="1oh8Sw5pyn0wYg8LYyoQFF3wtSc" />
   <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
@@ -39,32 +36,20 @@
     <property name="cf.first.check.clang-format" value="false" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$" />
     <property name="org.rust.cargo.project.model.PROJECT_DISCOVERY" value="true" />
-    <property name="org.rust.hideNoCargoProjectNotifications/Users/yuzhai/work/block-chain/contract/erc20/Cargo.toml" value="true" />
-    <property name="org.rust.hideNoCargoProjectNotifications/Users/yuzhai/work/block-chain/contract/erc20/lib.rs" value="true" />
     <property name="settings.editor.selected.configurable" value="preferences.lookFeel" />
   </component>
   <component name="RustProjectSettings">
     <option name="toolchainHomeDirectory" value="$USER_HOME$/.cargo/bin" />
-    <option name="version" value="2" />
   </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
     <task active="true" id="Default" summary="Default task">
-      <changelist id="75d6ea01-7d26-434c-b41b-1c55af4a2c99" name="Default Changelist" comment="" />
-      <created>1611884699117</created>
+      <changelist id="513975bd-7ce6-4036-bca8-3637b56af93b" name="Default Changelist" comment="" />
+      <created>1613727464781</created>
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
-      <updated>1611884699117</updated>
-      <workItem from="1611884700855" duration="358000" />
-      <workItem from="1611885061518" duration="5816000" />
-      <workItem from="1612319650512" duration="2563000" />
-      <workItem from="1612323218956" duration="4166000" />
-      <workItem from="1612330432357" duration="5757000" />
-      <workItem from="1612597391495" duration="1180000" />
-      <workItem from="1612598948450" duration="1381000" />
-      <workItem from="1612600664062" duration="70000" />
-      <workItem from="1613717063004" duration="32000" />
-      <workItem from="1613872193436" duration="949000" />
+      <updated>1613727464781</updated>
+      <workItem from="1613727465925" duration="109000" />
     </task>
     <servers />
   </component>
@@ -81,6 +66,5 @@
         </entry>
       </map>
     </option>
-    <option name="oldMeFiltersMigrated" value="true" />
   </component>
 </project>
